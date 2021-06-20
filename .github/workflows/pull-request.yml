@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+    - Pre-prod
+
+jobs:
+  pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: pull-request
+      uses: repo-sync/pull-request@v2
+      with:
+          source_branch: "Pre-prod"                                 # If blank, default: triggered branch
+          destination_branch: "main"                      # If blank, default: master
+          pr_title: "Pulling ${{ github.ref }} into master" # Title of pull request
+          pr_reviewer: "Th3-Gr3ym4n"                         # Comma-separated list (no spaces)
+          pr_label: "auto-pr"                               # Comma-separated list (no spaces)
+          github_token: ${{ secrets.GITHUB_TOKEN }}
