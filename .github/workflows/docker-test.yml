@@ -1,0 +1,22 @@
+name: docker-auto-test
+
+on:
+  push:
+    # Publish `master` as Docker `latest` image.
+    branches:
+      - Pre-prod
+
+jobs:
+  push:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Log into registry
+      - uses: actions/checkout@v2
+        with:
+         registry: docker.pkg.github.com
+         username: ${{ github.actor}}
+         password: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Run tests
+        run: docker build . --file Dockerfile
+          
