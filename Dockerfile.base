@@ -1,0 +1,15 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends default-jre curl python3 python3-pip
+
+ENV DOWNLOAD_URL https://download.knime.org/analytics-platform/linux/knime_4.4.4.linux.gtk.x86_64.tar.gz
+ENV INSTALLATION_DIR /usr/local
+ENV KNIME_DIR $INSTALLATION_DIR/knime_4.4.4
+ENV HOME_DIR /home/knime
+ENV WORKSPACE=/root/knime-workspace
+RUN curl -L "$DOWNLOAD_URL" | tar vxz -C $INSTALLATION_DIR && mkdir $WORKSPACE
+COPY ./requirements.txt ./ubuntu-pref.epf $WORKSPACE
+RUN pip3 install -r /root/knime-workspace/requirements.txt
+RUN curl -L "$DOWNLOAD_URL" | tar vxz -C $INSTALLATION_DIR
+
+CMD [ "/bin/bash" ]

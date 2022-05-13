@@ -1,11 +1,11 @@
 FROM ubuntu:20.04
 
-RUN apt-get update
-RUN apt-get install -y default-jre curl
+RUN apt-get update && apt-get install -y default-jre curl pip python3
+RUN 
 
-ENV DOWNLOAD_URL https://download.knime.org/analytics-platform/linux/knime_4.2.5.linux.gtk.x86_64.tar.gz
+ENV DOWNLOAD_URL https://download.knime.org/analytics-platform/linux/knime_4.4.4.linux.gtk.x86_64.tar.gz
 ENV INSTALLATION_DIR /usr/local
-ENV KNIME_DIR $INSTALLATION_DIR/knime_4.2.5
+ENV KNIME_DIR $INSTALLATION_DIR/knime_4.4.4
 ENV HOME_DIR /home/knime
 ENV WORKSPACE=/root/knime-workspace
 ENV KNIME_PLUGINS_URL https://update.knime.com/analytics-platform/4.2
