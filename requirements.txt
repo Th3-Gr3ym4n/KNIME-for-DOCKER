@@ -16,3 +16,4 @@ secure-smtplib==0.1.1
 setuptools==61.2.0
 six==1.16.0
 XlsxWriter==3.0.3
+pycaret==2.3.10

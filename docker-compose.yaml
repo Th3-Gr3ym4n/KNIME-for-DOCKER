@@ -1,0 +1,15 @@
+version: "3.9"
+services:
+  knime:
+    build: .
+    volumes:
+      - /mnt/c/Users/g/sftp-server/upload:/root/knime-workspace
+      - /mnt/c/Users/g/sftp-server/pycaret:/home/pycaret
+
+  sftp:
+    image: atmoz/sftp
+    volumes:
+      - /mnt/c/Users/g/sftp-server/upload:/home/foo/upload
+    ports:
+      - "2222:22"
+    command: foo:pass:1001
