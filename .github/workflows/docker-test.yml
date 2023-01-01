@@ -4,7 +4,7 @@ on:
   push:
     # Publish `master` as Docker `latest` image.
     branches:
-      - Pre-prod
+      - main
 
 jobs:
   push:
@@ -13,7 +13,7 @@ jobs:
       - name: Log into registry
       - uses: actions/checkout@v2
         with:
-         registry: docker.pkg.github.com
+         registry: ghcr.io
          username: ${{ github.actor}}
          password: ${{secrets.GITHUB_TOKEN}}
 
