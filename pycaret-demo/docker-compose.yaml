@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  knime:
+    build: .
+    volumes:
+      - /mnt/d/sftp-server/upload:/home/pycaret
+      - /mnt/d/data-docker/pycaret:/root/knime-workspace
+
+
+
+      
