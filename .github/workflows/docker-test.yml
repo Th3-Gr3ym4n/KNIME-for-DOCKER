@@ -19,7 +19,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./pycaret-demo .
+          context: ./pycaret-demo
           push: true
           tags: ghcr.io/th3-gr3ym4n/knime-for-docker/knimewithpython:latest
 
