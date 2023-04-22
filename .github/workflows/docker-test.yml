@@ -20,7 +20,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pycaret-demo
-          dockerfile: .
+          dockerfile: ./Dockerfile
           push: true
           tags: ghcr.io/th3-gr3ym4n/knime-for-docker/knimewithpython:latest
 
