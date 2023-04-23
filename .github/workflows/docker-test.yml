@@ -1,49 +1,19 @@
-name: Github Registry
-
+name: CI/CD Pipeline
 on:
   push:
     branches:
     - main
-
-env:
-  IMAGE_NAME: knime-for-docker/knimewithpython
-
 jobs:
-  build-and-push-images:
-    runs-on: ubuntu-latest
-    # Asignamos los permisos sobre los recursos de GitHub
-    permissions:
-      contents: read
-      packages: write
-
+  deploy:
+    runs-on: self-hosted
+    needs: build
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: |
-            ${{ env.IMAGE_NAME}}
-            ghcr.io/${{ env.IMAGE_NAME}}
-          tags: |
-            latest
-            type=sha
-
-      - name: Login to GHCR
-        if: github.ref == 'refs/heads/main' # Solo master
-        uses: docker/login-action@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: ./pycaret-demo
-          dockerfile: Dockerfile
-          push: github.ref == 'refs/heads/master' # Solo master
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Deploy to production server
+        run: |
+          cd /pycaret-demo
+          docker-compose down
+          docker-compose pull
+          docker-compose up -d
