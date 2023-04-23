@@ -1,6 +1,9 @@
 name: Github Registry
 
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+    branches:
+    - main
 
 env:
   IMAGE_NAME: knime-for-docker/knimewithpython
@@ -29,7 +32,7 @@ jobs:
             type=sha
 
       - name: Login to GHCR
-        if: github.ref == 'refs/heads/master' # Solo master
+        if: github.ref == 'refs/heads/main' # Solo master
         uses: docker/login-action@v1
         with:
           registry: ghcr.io
@@ -39,7 +42,8 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
-          context: ./pycaret-demo/ .
+          context: ./pycaret-demo
+          dockerfile: Dockerfile
           push: github.ref == 'refs/heads/master' # Solo master
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
