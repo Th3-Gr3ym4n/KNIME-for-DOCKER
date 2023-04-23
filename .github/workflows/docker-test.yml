@@ -10,6 +10,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Change directory
+        run: cd pycaret-demo
+
       - name: Deploy to production server
         run: |
           docker-compose down
