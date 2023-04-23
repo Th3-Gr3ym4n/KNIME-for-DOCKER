@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   knime:
-    build: .
+    image: ghcr.io/th3-gr3ym4n/knime-for-docker/knimewithpython
     volumes:
       - /mnt/d/sftp-server/upload:/home/pycaret
       - /mnt/d/data-docker/pycaret:/root/knime-workspace
