@@ -12,9 +12,8 @@ jobs:
 
       - name: Change directory
         run: cd pycaret-demo
-
+        
       - name: Deploy to production server
         run: |
-          docker-compose down
-          docker-compose pull
-          docker-compose up -d
+          Set-Location pycaret-demo
+          docker-compose down && docker-compose pull && docker-compose up -d
