@@ -1,0 +1,21 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get install -y --no-install-recommends default-jre curl python3 python3-pip
+ENV DOWNLOAD_URL https://download.knime.org/analytics-platform/linux/knime_4.4.4.linux.gtk.x86_64.tar.gz
+ENV KNIME_PLUGINS_URL https://update.knime.com/analytics-platform/4.4
+ENV INSTALLATION_DIR /usr/local
+ENV KNIME_DIR $INSTALLATION_DIR/knime_4.4.4
+ENV HOME_DIR /home/knime
+ENV PYCARET /home/pycaret
+ENV WORKSPACE=/root/knime-workspace
+RUN curl -k -L "$DOWNLOAD_URL" | tar vxz -C $INSTALLATION_DIR
+RUN mkdir $WORKSPACE && mkdir $PYCARET
+COPY ./requirements.txt ./ubuntu-pref.epf $WORKSPACE
+RUN $KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.base.feature.group -r $KNIME_PLUGINS_URL && \  
+$KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.python2.feature.group -r $KNIME_PLUGINS_URL && \  
+$KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.google.api.feature.group -r $KNIME_PLUGINS_URL
+RUN pip3 install -r /root/knime-workspace/requirements.txt
+COPY ./pycaret-demo.zip $WORKSPACE
+ADD script.sh /script.sh
+RUN chmod +x /script.sh
+ENTRYPOINT ["/script.sh"]
