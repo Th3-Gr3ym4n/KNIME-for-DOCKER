@@ -5,15 +5,16 @@ on:
     - main
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Change directory
-        run: cd pycaret-demo
-
-      - name: Deploy to production server
-        run: |
-          Set-Location pycaret-demo
-          docker-compose down; docker-compose pull; docker-compose up -d
+      - name: Log into registry
+      - uses: actions/checkout@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Setup docker build
+        uses: docker/setup-buildx-actions@v1
+        
+      - name: Create imagen
+        run: docker build . --file pycaret-demo/Dockerfile
