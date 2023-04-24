@@ -6,7 +6,7 @@ on:
     - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-20.04
     steps:
       - name: Check out repository
@@ -34,6 +34,22 @@ jobs:
 
           # Push the Docker image to the registry
           docker push ghcr.io/th3-gr3ym4n/knime-for-docker/knimewithpython:latest
+
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Change directory
+        run: cd pycaret-demo
+
+      - name: Deploy to production server
+        run: |
+          Set-Location pycaret-demo
+          docker-compose down; docker-compose pull; docker-compose up -d
 
 
         
