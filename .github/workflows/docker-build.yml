@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Log into registry
-      - uses: actions/checkout@v2
+        uses: actions/checkout@v2
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
