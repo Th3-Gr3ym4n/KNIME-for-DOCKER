@@ -1,0 +1,19 @@
+name: CI/CD Pipeline
+on:
+  push:
+    branches:
+    - main
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Change directory
+        run: cd pycaret-demo
+
+      - name: Deploy to production server
+        run: |
+          Set-Location pycaret-demo
+          docker-compose down; docker-compose pull; docker-compose up -d
