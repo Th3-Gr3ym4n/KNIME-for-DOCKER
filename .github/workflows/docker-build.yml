@@ -17,4 +17,4 @@ jobs:
         uses: docker/setup-buildx-action@v1
         
       - name: Create image
-        run: docker build /home/runner/work/KNIME-for-DOCKER/pycaret-demo --file pycaret-demo/Dockerfile
+        run: docker build pycaret-demo --file pycaret-demo/Dockerfile
