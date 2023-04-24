@@ -10,7 +10,7 @@ ENV PYCARET /home/pycaret
 ENV WORKSPACE=/root/knime-workspace
 RUN curl -k -L "$DOWNLOAD_URL" | tar vxz -C $INSTALLATION_DIR
 RUN mkdir $WORKSPACE && mkdir $PYCARET
-COPY ./requirements.txt ./ubuntu-pref.epf $WORKSPACE
+COPY ./requirements.txt ./ubuntu-pref.epf $WORKSPACE/
 RUN $KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.base.feature.group -r $KNIME_PLUGINS_URL && \  
 $KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.python2.feature.group -r $KNIME_PLUGINS_URL && \  
 $KNIME_DIR/knime -application org.eclipse.equinox.p2.director -i org.knime.features.google.api.feature.group -r $KNIME_PLUGINS_URL
